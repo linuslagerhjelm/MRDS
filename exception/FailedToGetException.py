@@ -1,0 +1,2 @@
+class FailedToGetException(Exception):
+    pass
