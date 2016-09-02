@@ -1,4 +1,5 @@
 import sys
+import logging
 import json
 
 class Path:
@@ -6,12 +7,14 @@ class Path:
     def __init__ (self, f):
         try:
             with open(f,'r') as data_file:
-                data = (data_file.read())
-                self.json_data = json.loads(data)
-                print(json.dumps(self.json_data))
-                # print(json_data)
-                # print (json_data['pose'])
+                self.data = (data_file.read())
+                self.json_data = json.loads(self.data)
                 data_file.close()
         except TypeError:
-            print ("ERROR: Unable to read file")
+            raise (NoAvailablePathException("Failed to read path file"))
+
+    def get_closest_pos(self, loc):
+        return null
+    def get_goal_point(self, start, lookahead, laser):
+        return null 
 

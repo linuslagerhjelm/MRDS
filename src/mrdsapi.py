@@ -1,3 +1,4 @@
+#TODO: RENAME TO ROBOT
 import httplib
 import json
 from exception import FailedToGetException
