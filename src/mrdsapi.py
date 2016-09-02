@@ -42,7 +42,9 @@ class Mrdsapi:
 
     def get_localization(self):
         """Get the robots position from the API. Returns a Pose object"""
-        return self._request_data("/lokarria/localization")
+        # return self._request_data("/lokarria/localization")
+        debug = self._request_data("/lokarria/localization")
+        return debug
 
     def get_laser_echoes(self):
         """Get the current laser scan from the robot. Returns a dictionary containing laser data"""
