@@ -7,7 +7,7 @@ def main():
     PORT = sys.argv[2]
     LOOKAHEAD = sys.argv[3]
     mrds = Mrdsapi(ADDRESS, PORT)
-    path_file = Path(path)
+    path_file = Path(sys.argv[4])
     rob = Robot(mrds)
 
 if __name__ == "__main__":
