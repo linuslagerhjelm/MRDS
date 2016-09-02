@@ -6,7 +6,7 @@ from exception import FailedToPostException
 HEADERS = {"Content-type": "application/json", "Accept": "text/json"}
 
 
-class mrdsapi:
+class Mrdsapi:
     """mrdsapi specifies a wrapper class around the api for a running mrds server"""
     def __init__(self, address, port):
         self.address = address
