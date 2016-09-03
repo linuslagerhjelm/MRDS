@@ -1,4 +1,3 @@
-#TODO: RENAME TO ROBOT
 import httplib
 import json
 from exception import FailedToGetException
@@ -8,7 +7,13 @@ HEADERS = {"Content-type": "application/json", "Accept": "text/json"}
 
 
 class Mrdsapi:
-    """mrdsapi specifies a wrapper class around the api for a running mrds server"""
+    """Mrdsapi specifies a wrapper class around the api for a running mrds server
+
+        Attributes:
+            address: the web address to connect to
+            port: the port to use for the connection
+            url: the connection string to use when opening a connection
+    """
     def __init__(self, address, port):
         self.address = address
         self.port = port
@@ -42,9 +47,7 @@ class Mrdsapi:
 
     def get_localization(self):
         """Get the robots position from the API. Returns a Pose object"""
-        # return self._request_data("/lokarria/localization")
-        debug = self._request_data("/lokarria/localization")
-        return debug
+        return self._request_data("/lokarria/localization")
 
     def get_laser_echoes(self):
         """Get the current laser scan from the robot. Returns a dictionary containing laser data"""
