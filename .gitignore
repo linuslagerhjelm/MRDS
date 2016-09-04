@@ -1,2 +1,6 @@
 .idea
 .DS_Store
+*.aux
+*.out
+*.pdf
+*.log
