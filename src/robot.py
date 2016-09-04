@@ -1,28 +1,38 @@
-import Mrdsapi
-import Conf
-import Laser
-import json
+from src.laser import Laser
+
 
 class Robot:
+    """ Robot represents a planner for the tracker robot over on MRDS
 
+        Attributes:
+            linear the current linear speed
+            angular the current angular speed
+            mrds is a mrdsapi object that handles api requests
+            laser is a laser object that handles laser data
+            pose is a pose object representing the current location of the robot
+    """
     def __init__(self, mrds):
+        self.linear = None
+        self.angular = None
         self.mrds = mrds
-        self.laser = Laser()
-        # pose['Pose']['Position]['X']
-        self.pose = self.mrds.getLocalization()
+        self.laser = Laser(mrds)
+        self.pose = self.mrds.get_localization()
         return
 
-    def set_linear_speed(self,linear):
+    def set_linear_speed(self, linear):
+        """Updates both the planner and tracker linear speed, angular speed remains unchanged"""
         self.linear = linear
         self.mrds.post_speed(self.angular, linear)
 
-    def set_angular_speed(self,angular):
-        self.angular= angular
+    def set_angular_speed(self, angular):
+        """Updates both the planner and tracker angular speed, linear speed remains unchanged"""
+        self.angular = angular
         self.mrds.post_speed(angular, self.linear)
 
-    def set_speed(self,angular,linear):
+    def set_speed(self, angular, linear):
+        """Updates both angular and linear speed for both planner and tracker"""
         self.linear = linear
-        self.angular= angular
+        self.angular = angular
         self.mrds.post_speed(angular, linear)
     
 

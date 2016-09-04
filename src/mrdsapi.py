@@ -1,4 +1,3 @@
-#TODO: RENAME TO ROBOT
 import httplib
 import json
 from exception import FailedToGetException
@@ -8,7 +7,13 @@ HEADERS = {"Content-type": "application/json", "Accept": "text/json"}
 
 
 class Mrdsapi:
-    """mrdsapi specifies a wrapper class around the api for a running mrds server"""
+    """Mrdsapi specifies a wrapper class around the api for a running mrds server
+
+        Attributes:
+            address: the web address to connect to
+            port: the port to use for the connection
+            url: the connection string to use when opening a connection
+    """
     def __init__(self, address, port):
         self.address = address
         self.port = port
