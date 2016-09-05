@@ -43,10 +43,11 @@ class LowControl:
         # get robot location
         # compute distance
         loc = self.mrds.get_localization()
-        dist = utils.position_distance()
+        dist = utils.position_distance(loc, point)
         # compute rotation
+        rot = degree_distance(loc,point)
         # set speed
-        # set angular speed
+        self.set_speed(1,1)
         # TODO: STOP WHEN POINT IS REACHED!!!!!
     
         

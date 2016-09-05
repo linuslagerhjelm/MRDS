@@ -17,4 +17,4 @@ class UtilsTest(unittest.TestCase):
         self.assertEquals(Utils.position_distance(P1, P2), DISTANCE)
     
     def test_angular_distance(self):
-        return
+        print Utils.degree_distance(P1, P2)
