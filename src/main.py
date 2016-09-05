@@ -2,7 +2,7 @@ import sys
 import os
 from src.mrdsapi import Mrdsapi
 from src.path import Path
-from src.robot import Robot
+from src.lowcontrol import LowControl
 
 
 # Input argument address, port, lookahead, path to path file

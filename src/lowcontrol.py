@@ -1,7 +1,8 @@
 from src.laser import Laser
+import src.utils
 
 
-class Robot:
+class LowControl:
     """ Robot represents a planner for the tracker robot over on MRDS
 
         Attributes:
@@ -38,4 +39,14 @@ class Robot:
         self.angular = angular
         self.mrds.post_speed(angular, linear)
     
-
+    def steer_to_point(self,point):
+        # get robot location
+        # compute distance
+        loc = self.mrds.get_localization()
+        dist = utils.position_distance()
+        # compute rotation
+        # set speed
+        # set angular speed
+        # TODO: STOP WHEN POINT IS REACHED!!!!!
+    
+        
