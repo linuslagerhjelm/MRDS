@@ -15,3 +15,6 @@ class UtilsTest(unittest.TestCase):
 
     def test_position_distance(self):
         self.assertEquals(Utils.position_distance(P1, P2), DISTANCE)
+    
+    def test_angular_distance(self):
+        return

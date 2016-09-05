@@ -16,26 +16,30 @@ class Path:
 
         except Exception:
             # Rethrow with custom exception for clarity
-            raise NoAvailablePathException("Failed to read path file on path: " + f)
+            raise NoAvailablePathException("Failed to read path file on path: " 
+                    + f)
 
     def get_closest_pos(self):
         """Returns the closest Pose on the path"""
         return self.data_points.pop()
 
     def get_goal_point(self, start, loc, lookahead, laser):
-        """Returns an ideal goal point based on start point, lookahead distance and latest laser scan"""
+        """Returns an ideal goal point based on start point, lookahead distance 
+        and latest laser scan"""
         # while current look in list < lookahead distance
         #   get angle between robot (facing direction) and path
         #   find the corresponding laser(s) scan
-        #   if laser scan distance is smaller than distance between robot and point
+        #   if laser scan distance is smaller than distance between robot and 
+        #   point
         #       the point is behind something, return the previous point
         #   else look for the next point
 
-        # NOTE: code somewhere else will have to check how close we must follow the
-        #       path in order to reach the goal point without crashing
+        # NOTE: code somewhere else will have to check how close we must follow 
+        #       the path in order to reach the goal point without crashing
 
-        # NOTE2: we will have to add some handling for the "special" case where our goal
-        #        is the last point in the list. Aka we'll run out of elements to pop from the list
+        # NOTE2: we will have to add some handling for the "special" case where 
+        #        our goal is the last point in the list. Aka we'll run out of 
+        #        elements to pop from the list
         i = 0
         previous_point = start
         goal_point = self.data_points.pop()

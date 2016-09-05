@@ -3,7 +3,7 @@ import unittest
 from src.path import Path
 from src.utils import Utils
 
-PATH_TO_EXAMPLE = '../examples/Path-to-bed.json'
+PATH_TO_EXAMPLE = 'examples/Path-to-bed.json'
 
 
 class PathTest(unittest.TestCase):

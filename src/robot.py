@@ -5,11 +5,12 @@ class Robot:
     """ Robot represents a planner for the tracker robot over on MRDS
 
         Attributes:
-            linear the current linear speed
-            angular the current angular speed
-            mrds is a mrdsapi object that handles api requests
-            laser is a laser object that handles laser data
-            pose is a pose object representing the current location of the robot
+            linear    the current linear speed
+            angular   the current angular speed
+            mrds      a mrdsapi object that handles api requests
+            laser     a laser object that handles laser data
+            pose      a pose object representing the current location of the 
+                      robot
     """
     def __init__(self, mrds):
         self.linear = None
@@ -20,12 +21,14 @@ class Robot:
         return
 
     def set_linear_speed(self, linear):
-        """Updates both the planner and tracker linear speed, angular speed remains unchanged"""
+        """Updates both the planner and tracker linear speed, angular speed 
+           remains unchanged"""
         self.linear = linear
         self.mrds.post_speed(self.angular, linear)
 
     def set_angular_speed(self, angular):
-        """Updates both the planner and tracker angular speed, linear speed remains unchanged"""
+        """Updates both the planner and tracker angular speed, linear speed 
+            remains unchanged"""
         self.angular = angular
         self.mrds.post_speed(angular, self.linear)
 
