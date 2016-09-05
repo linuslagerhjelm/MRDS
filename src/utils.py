@@ -14,8 +14,10 @@ def position_distance(p1, p2):
         value"""
     pos1 = p1["Pose"]["Position"]
     pos2 = p2["Pose"]["Position"]
-
+    
     # Omit the Z coordinates as suggested by supervisor
+    # May need to be multiplied by an arbitrary constant because there's
+    # no given unit. This requires further investigation. 🕵🏽
     return math.sqrt(((pos1["X"] - pos2["X"])**2) +
             ((pos1["Y"] - pos2["Y"])**2))
 
