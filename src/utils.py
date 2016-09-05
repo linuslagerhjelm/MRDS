@@ -16,7 +16,7 @@ def position_distance(p1, p2):
     pos2 = p2["Pose"]["Position"]
 
     # Omit the Z coordinates as suggested by supervisor
-    return math.sqrt(((pos1["X"] - pos2["X"])**2) + 
+    return math.sqrt(((pos1["X"] - pos2["X"])**2) +
             ((pos1["Y"] - pos2["Y"])**2))
 
 def degree_distance(p1, p2):
