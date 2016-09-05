@@ -15,7 +15,7 @@ def main():
     PORT = sys.argv[2]
     LOOKAHEAD = sys.argv[3]
     path = Path(os.path.abspath(sys.argv[4]))
-    robot = Robot(Mrdsapi(ADDRESS, PORT))
+    lc = LowControl(Mrdsapi(ADDRESS, PORT))
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,7 @@
 from src.laser import Laser
-import src.utils
+from time import sleep
+from threading import Timer
+import utils
 
 
 class LowControl:
@@ -17,6 +19,7 @@ class LowControl:
         self.linear = None
         self.angular = None
         self.mrds = mrds
+        self.timer = None
         self.laser = Laser(mrds)
         self.pose = self.mrds.get_localization()
         return
@@ -39,15 +42,20 @@ class LowControl:
         self.angular = angular
         self.mrds.post_speed(angular, linear)
     
-    def steer_to_point(self,point):
-        # get robot location
-        # compute distance
+    def steer_to_point(self, point, speed):
+        if self.timer:
+            self.timer.cancel()
+
         loc = self.mrds.get_localization()
         dist = utils.position_distance(loc, point)
-        # compute rotation
-        rot = degree_distance(loc,point)
-        # set speed
-        self.set_speed(1,1)
-        # TODO: STOP WHEN POINT IS REACHED!!!!!
-    
-        
+        rot = utils.degree_distance(loc, point)
+        timeout = dist/speed
+        angular_speed = rot/timeout
+
+        self.set_speed(angular_speed, speed)
+        self.timer = Timer(timeout, self._stop_robot)
+        self.timer.start()
+
+    def _stop_robot(self):
+        self.set_speed(0, 0)
+        self.timer = None
