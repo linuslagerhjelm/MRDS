@@ -8,7 +8,7 @@ from src.lowcontrol import LowControl
 
 # Input argument address, port, lookahead, path to path file
 def main():
-    if len(sys.argv) != 5:
+    if len(sys.argv) != 6:
         print "This program requires exactly 5 input parameters. Got: " + str(len(sys.argv))
         sys.exit(0)
 
@@ -16,10 +16,9 @@ def main():
     PORT = sys.argv[2]
     LOOKAHEAD = sys.argv[3]
     path = Path(os.path.abspath(sys.argv[4]))
+    SPEED = float(sys.argv[5])
     lc = LowControl(Mrdsapi(ADDRESS, PORT))
-    for i in range(0, len(path.data_points)):
-        lc.steer_to_point(path.data_points[i], 1)
-        sleep(.1)
+
 
 if __name__ == "__main__":
     main()

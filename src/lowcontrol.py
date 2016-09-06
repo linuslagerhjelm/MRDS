@@ -55,6 +55,12 @@ class LowControl:
         # self.timer = Timer(timeout, self._stop_robot)
         # self.timer.start()
 
+    def get_location(self):
+        return self.mrds.get_localization()
+
+    def get_laser_scan(self):
+        return self.mrds.get_laser_echoes()
+
     def _stop_robot(self):
         self.set_speed(0, 0)
         self.timer = None

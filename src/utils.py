@@ -20,6 +20,14 @@ def position_distance(p1, p2):
             ((pos1["Y"] - pos2["Y"])**2))
 
 
+def get_x_dist(p1, p2):
+    return p2["Pose"]["Position"]["X"] - p1["Pose"]["Position"]["X"]
+
+
+def get_y_dist(p1, p2):
+    return p2["Pose"]["Position"]["Y"] - p1["Pose"]["Position"]["Y"]
+
+
 def degree_distance(p1, p2):
     pos1 = p1["Pose"]["Orientation"]
     pos2 = p2["Pose"]["Orientation"]
