@@ -42,19 +42,19 @@ class LowControl:
         self.angular = angular
         self.mrds.post_speed(angular, linear)
     
-    def steer_to_point(self, point, speed):
-        if self.timer:
-            self.timer.cancel()
+    def steer_to_point(self, point, speed, rotation):
+        # if self.timer:
+        #    self.timer.cancel()
 
         loc = self.mrds.get_localization()
         dist = utils.position_distance(loc, point)
-        rot = utils.degree_distance(loc, point)
-        timeout = dist/speed
-        angular_speed = rot/timeout
+        # rot = utils.degree_distance(loc, point)
 
-        self.set_speed(angular_speed, speed)
-        self.timer = Timer(timeout, self._stop_robot)
-        self.timer.start()
+        timeout = dist/speed
+
+        self.set_speed(0, speed)
+        # self.timer = Timer(timeout, self._stop_robot)
+        # self.timer.start()
 
     def _stop_robot(self):
         self.set_speed(0, 0)

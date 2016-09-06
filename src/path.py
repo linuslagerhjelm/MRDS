@@ -1,5 +1,5 @@
 import json
-from src.utils import Utils
+from src.utils import *
 from exception.NoAvailablePathException import NoAvailablePathException
 
 
@@ -45,9 +45,9 @@ class Path:
         goal_point = self.data_points.pop()
 
         while i <= lookahead:
-            deg = Utils.degree_distance(loc, goal_point)
+            deg = degree_distance(loc, goal_point)
             laser_dist = laser[deg]
-            if laser_dist < Utils.position_distance(loc, goal_point):
+            if laser_dist < position_distance(loc, goal_point):
                 return previous_point
             else:
                 i += 1
