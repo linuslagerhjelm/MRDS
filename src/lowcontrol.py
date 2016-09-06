@@ -5,7 +5,7 @@ import utils
 
 
 class LowControl:
-    """ Robot represents a planner for the tracker robot over on MRDS
+    """ Lowcontrol represents a planner for the tracker robot over on MRDS
 
         Attributes:
             linear    the current linear speed
@@ -42,17 +42,16 @@ class LowControl:
         self.angular = angular
         self.mrds.post_speed(angular, linear)
     
-    def steer_to_point(self, point, speed, rotation):
+    def steer_to_point(self, point, speed, curvature):
         # if self.timer:
         #    self.timer.cancel()
-
-        loc = self.mrds.get_localization()
-        dist = utils.position_distance(loc, point)
         # rot = utils.degree_distance(loc, point)
 
-        timeout = dist/speed
+        #omega = vY according to lecture notes
+        omega = speed*curvature
+        # timeout = dist/speed
 
-        self.set_speed(0, speed)
+        self.set_speed(omega, speed)
         # self.timer = Timer(timeout, self._stop_robot)
         # self.timer.start()
 
