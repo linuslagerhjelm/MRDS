@@ -11,7 +11,8 @@ class Path:
                 self.data_points = json.loads(data_file.read())
 
                 # Reverse list to allow it to function as a stack
-                self.data_points = list(reversed(self.data_points))
+                self.data_points = list(self.data_points)
+                self.data_points.reverse()
                 data_file.close()
 
         except Exception:
@@ -43,15 +44,17 @@ class Path:
         i = 0
         previous_point = start
         goal_point = self.data_points.pop()
+        for i in range(1, lookahead):
+            goal_point = self.data_points.pop()
 
-        while i <= lookahead:
-            deg = degree_distance(loc, goal_point)
-            laser_dist = laser[deg]
-            if laser_dist < position_distance(loc, goal_point):
-                return previous_point
-            else:
-                i += 1
-                previous_point = goal_point
-                goal_point = self.data_points.pop()
+        # while i <= lookahead:
+        #    deg = degree_distance(loc, goal_point)
+        #    laser_dist = laser[deg]
+        #    if laser_dist < position_distance(loc, goal_point):
+        #        return previous_point
+        #    else:
+        #        i += 1
+        #        previous_point = goal_point
+        #        goal_point = self.data_points.pop()
 
         return goal_point

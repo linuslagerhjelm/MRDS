@@ -50,7 +50,7 @@ class LowControl:
         #omega = vY according to lecture notes
         omega = speed*curvature
         # timeout = dist/speed
-
+        print omega
         self.set_speed(omega, speed)
         # self.timer = Timer(timeout, self._stop_robot)
         # self.timer.start()

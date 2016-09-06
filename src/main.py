@@ -1,9 +1,9 @@
 import sys
 import os
-from time import sleep
 from src.mrdsapi import Mrdsapi
 from src.path import Path
 from src.lowcontrol import LowControl
+from src.highcontrol import HighControl
 
 
 # Input argument address, port, lookahead, path to path file
@@ -12,12 +12,14 @@ def main():
         print "This program requires exactly 5 input parameters. Got: " + str(len(sys.argv))
         sys.exit(0)
 
-    ADDRESS = sys.argv[1]
-    PORT = sys.argv[2]
-    LOOKAHEAD = sys.argv[3]
+    address = sys.argv[1]
+    port = sys.argv[2]
+    lookahead = int(sys.argv[3])
     path = Path(os.path.abspath(sys.argv[4]))
-    SPEED = float(sys.argv[5])
-    lc = LowControl(Mrdsapi(ADDRESS, PORT))
+    speed = float(sys.argv[5])
+    lc = LowControl(Mrdsapi(address, port))
+    hc = HighControl(lc, lookahead, speed)
+    hc.start(path)
 
 
 if __name__ == "__main__":
