@@ -1,6 +1,7 @@
 import json
 import math
 from Quaternion import normalize
+from src.given import heading
 from Quaternion import Quat
 
 
@@ -24,17 +25,20 @@ def delta_x(p1,p2):
     x2= p2["Pose"]["Position"]["X"]
     return math.fabs(x1-x2)
 
+
 def delta_y(p1,p2):
     y1= p1["Pose"]["Position"]["Y"]
     y2= p2["Pose"]["Position"]["Y"]
     return math.fabs(y1-y2)
 
-def norm_dist(p1,p2):
+
+def norm_y_dist(p1,p2):
     dist = pos_dist(p1,p2)
-    w = p["Pose"]["Position"]["W"]
-    angle = math.atan2(delta_x(p1,p2),delta_y(p1,p2))
-    new_angle = math.pi/4 - angle - w
-    return sin(new_angle)*dist
+    w = heading(p1["Pose"]["Orientation"]) #p1["Pose"]["Orientation"]["W"]
+    angle = math.atan2(delta_y(p1, p2), delta_x(p1, p2))
+    new_angle = math.pi/4 - angle - math.atan2(w["Y"], w["X"])
+    print math.cos(new_angle) * 180 / math.pi
+    return math.cos(new_angle)*dist
 
 
 def norm_y(robot_p, p):

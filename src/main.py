@@ -9,12 +9,12 @@ from src.highcontrol import HighControl
 # Input argument address, port, lookahead, path to path file
 def main():
     if len(sys.argv) != 6:
-        print "This program requires exactly 5 input parameters. Got: " + str(len(sys.argv))
+        print "This program requires exactly 6 input parameters. Got: " + str(len(sys.argv))
         sys.exit(0)
 
     address = sys.argv[1]
     port = sys.argv[2]
-    lookahead = int(sys.argv[3])
+    lookahead = float(sys.argv[3])
     path = Path(os.path.abspath(sys.argv[4]))
     speed = float(sys.argv[5])
     lc = LowControl(Mrdsapi(address, port))

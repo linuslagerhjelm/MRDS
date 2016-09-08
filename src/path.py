@@ -19,47 +19,17 @@ class Path:
             raise NoAvailablePathException("Failed to read path file on path: " 
                     + f)
 
-    def get_closest_pos(self):
-        """Returns the closest Pose on the path"""
-        return self.data_points.pop()
 
-    def get_goal_point(self, start, loc, lookahead, laser):
+
+    def get_goal_point(self, lookahead, laser):
         """Returns an ideal goal point based on start point, lookahead distance 
         and latest laser scan"""
-        # while current look in list < lookahead distance
-        #   get angle between robot (facing direction) and path
-        #   find the corresponding laser(s) scan
-        #   if laser scan distance is smaller than distance between robot and 
-        #   point
-        #       the point is behind something, return the previous point
-        #   else look for the next point
-
-        # NOTE: code somewhere else will have to check how close we must follow 
-        #       the path in order to reach the goal point without crashing
-
-        # NOTE2: we will have to add some handling for the "special" case where 
-        #        our goal is the last point in the list. Aka we'll run out of 
-        #        elements to pop from the list
-        i = 0
-        previous_point = start
         goal_point = self.data_points[0]
-        for i in range(self.data_points):
-            if (position_distance(goal_point, self.data_points[i]) < lookahead):
+        for i in range(1, len(self.data_points)):
+            if pos_dist(goal_point, self.data_points[i]) < lookahead:
                 goal_point = self.data_points[i]
             else:
                 self.data_points = self.data_points[i:]
                 break
-
-
-
-        # while i <= lookahead:
-        #    deg = degree_distance(loc, goal_point)
-        #    laser_dist = laser[deg]
-        #    if laser_dist < position_distance(loc, goal_point):
-        #        return previous_point
-        #    else:
-        #        i += 1
-        #        previous_point = goal_point
-        #        goal_point = self.data_points.pop()
 
         return goal_point

@@ -2,6 +2,7 @@ from src.laser import Laser
 from time import sleep
 from threading import Timer
 import utils
+import math
 
 
 class LowControl:
@@ -47,10 +48,9 @@ class LowControl:
         #    self.timer.cancel()
         # rot = utils.degree_distance(loc, point)
 
-        #omega = vY according to lecture notes
+        # omega = vY according to lecture notes
         omega = speed*curvature
         # timeout = dist/speed
-        print omega
         self.set_speed(omega, speed)
         # self.timer = Timer(timeout, self._stop_robot)
         # self.timer.start()

@@ -21,14 +21,13 @@ class HighControl:
             loc = self.lc.get_location()
 
             # Define a goal point (GP) on the path, at distance L from the robot
-            gp = path.get_goal_point(path.get_closest_pos(),
-                     loc, self.look, self.lc.get_laser_scan())
+            gp = path.get_goal_point(self.look, self.lc.get_laser_scan())
             lookahead = utils.pos_dist(gp, loc)
 
             # Construct a circle passing through (0,0)RCS and GP, such that the
             # vehicle orientation is a tangent to the circle The circle is defined
             # by its radius r and midpoint We know that r = L^2/2y from geometry
-            y = utils.norm_dist(gp, loc)
+            y = utils.norm_y_dist(gp, loc)
             r = (lookahead**2) / (2*y)
 
             # Set phi or omega to correspond to motion along this circle, omega = vY
@@ -37,6 +36,5 @@ class HighControl:
             Y = 1/r
 
             self.lc.steer_to_point(gp, self.speed, Y)
-            sleep(.64/self.speed)
 
         return
