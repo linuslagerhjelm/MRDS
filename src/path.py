@@ -12,7 +12,6 @@ class Path:
 
                 # Reverse list to allow it to function as a stack
                 self.data_points = list(self.data_points)
-                self.data_points.reverse()
                 data_file.close()
 
         except Exception:
@@ -43,9 +42,15 @@ class Path:
         #        elements to pop from the list
         i = 0
         previous_point = start
-        goal_point = self.data_points.pop()
-        for i in range(1, lookahead):
-            goal_point = self.data_points.pop()
+        goal_point = self.data_points[0]
+        for i in range(self.data_points):
+            if (position_distance(goal_point, self.data_points[i]) < lookahead):
+                goal_point = self.data_points[i]
+            else:
+                self.data_points = self.data_points[i:]
+                break
+
+
 
         # while i <= lookahead:
         #    deg = degree_distance(loc, goal_point)

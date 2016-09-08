@@ -9,7 +9,7 @@ def position_equals(p1, p2):
     return json.dumps(p1) == json.dumps(p2)
 
 
-def position_distance(p1, p2):
+def pos_dist(p1, p2):
     """Returns the euclidean distance between two points as a floating point 
         value"""
     pos1 = p1["Pose"]["Position"]
@@ -19,12 +19,52 @@ def position_distance(p1, p2):
     return math.sqrt(((pos1["X"] - pos2["X"])**2) +
             ((pos1["Y"] - pos2["Y"])**2))
 
+def delta_x(p1,p2):
+    x1= p1["Pose"]["Position"]["X"]
+    x2= p2["Pose"]["Position"]["X"]
+    return math.fabs(x1-x2)
 
-def get_x_dist(p1, p2):
+def delta_y(p1,p2):
+    y1= p1["Pose"]["Position"]["Y"]
+    y2= p2["Pose"]["Position"]["Y"]
+    return math.fabs(y1-y2)
+
+def norm_dist(p1,p2):
+    dist = pos_dist(p1,p2)
+    xPrim = p["Pose"]["Position"]["X"]
+    angle = math.atan2(delta_x(p1,p2),delta_y(p1,p2))
+    return sin(dist)*angle
+
+
+def norm_y(robot_p, p):
+    """Convert a x position in RCS to WCS"""
+    xPrim = p["Pose"]["Position"]["X"]
+    yPrim = p["Pose"]["Position"]["Y"]
+    y0 = robot_p["Pose"]["Position"]["Y"]
+    w = p["Pose"]["Position"]["W"]
+    return y0 + xPrim*math.sin(w) - yPrim*math.cos(w)
+
+def norm_x(robot_p, p):
+    """Convert a y position in RCS to WCS"""
+    xPrim = p["Pose"]["Position"]["X"]
+    yPrim = p["Pose"]["Position"]["Y"]
+    x0 = robot_p["Pose"]["Position"]["X"]
+    w = p["Pose"]["Position"]["W"]
+    return x0 + xPrim*math.cos(w) - yPrim*math.sin(w)
+
+def x_dist(p1, p2):
     return math.fabs(p2["Pose"]["Position"]["X"] - p1["Pose"]["Position"]["X"])
 
 
-def get_y_dist(p1, p2):
+
+def y_dist(p1, p2):
+    w1 = p1["Pose"]["Position"]["W"]
+    x1 = p1["Pose"]["Position"]["X"]
+    y1 = p1["Pose"]["Position"]["Y"]
+    w2 = p2["Pose"]["Position"]["W"]
+    x2 = p2["Pose"]["Position"]["X"]
+    y2 = p2["Pose"]["Position"]["Y"]
+    
     return math.fabs(p2["Pose"]["Position"]["Y"] - p1["Pose"]["Position"]["Y"])
 
 
