@@ -24,12 +24,15 @@ class Path:
     def get_goal_point(self, lookahead, laser):
         """Returns an ideal goal point based on start point, lookahead distance 
         and latest laser scan"""
+        # We are not choosing the correct goal point
         goal_point = self.data_points[0]
-        for i in range(1, len(self.data_points)):
-            if pos_dist(goal_point, self.data_points[i]) < lookahead:
+        for i in range(0, len(self.data_points)):
+            dist = pos_dist(goal_point, self.data_points[i])
+            if dist < lookahead:
                 goal_point = self.data_points[i]
             else:
-                self.data_points = self.data_points[i:]
+                if i <= 1:
+                    self.data_points = self.data_points[i:]
                 break
 
         return goal_point
