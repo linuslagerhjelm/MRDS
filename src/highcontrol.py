@@ -23,7 +23,6 @@ class HighControl:
             # Define a goal point (GP) on the path, at distance L from the robot
             gp = path.get_goal_point(path.get_closest_pos(),
                      loc, self.look, self.lc.get_laser_scan())
-
             lookahead = utils.pos_dist(gp, loc)
 
             # Construct a circle passing through (0,0)RCS and GP, such that the
