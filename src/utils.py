@@ -31,9 +31,10 @@ def delta_y(p1,p2):
 
 def norm_dist(p1,p2):
     dist = pos_dist(p1,p2)
-    xPrim = p["Pose"]["Position"]["X"]
+    w = p["Pose"]["Position"]["W"]
     angle = math.atan2(delta_x(p1,p2),delta_y(p1,p2))
-    return sin(dist)*angle
+    new_angle = math.pi/4 - angle - w
+    return sin(new_angle)*dist
 
 
 def norm_y(robot_p, p):
