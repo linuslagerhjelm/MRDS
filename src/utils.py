@@ -1,11 +1,6 @@
 import json
 import math
-from Quaternion import normalize
 from src.given import heading
-
-def position_equals(p1, p2):
-    """Compares two points to determine if the are the same"""
-    return json.dumps(p1) == json.dumps(p2)
 
 
 def pos_dist(p1, p2):
@@ -15,11 +10,10 @@ def pos_dist(p1, p2):
     pos2 = p2["Pose"]["Position"]
     
     # Omit the Z coordinates as suggested by supervisor
-    return math.sqrt(((pos1["X"] - pos2["X"])**2) +
-            ((pos1["Y"] - pos2["Y"])**2))
+    return math.sqrt(((pos1["X"] - pos2["X"])**2) + ((pos1["Y"] - pos2["Y"])**2))
 
 
-def delta_x(p1,p2):
+def delta_x(p1, p2):
     x1= p1["Pose"]["Position"]["X"]
     x2= p2["Pose"]["Position"]["X"]
     return math.fabs(x1-x2)
@@ -35,27 +29,27 @@ def norm_y_dist(loc, gp):
     dist = pos_dist(loc, gp)
     w = heading(loc["Pose"]["Orientation"])
     angle_rcs_y = math.atan2(delta_y(loc, gp), delta_x(loc, gp))
-    angle_wcs_y = angle_rcs_y + math.atan2(w["Y"], w["X"])
+    angle_wcs_y = angle_rcs_y - math.atan2(w["Y"], w["X"])
     # print math.cos(new_angle) * 180 / math.pi
     return math.sin(angle_wcs_y)*dist
 
 
 def norm_y(robot_p, p):
     """Convert a x position in RCS to WCS"""
-    xPrim = p["Pose"]["Position"]["X"]
-    yPrim = p["Pose"]["Position"]["Y"]
+    x_prim = p["Pose"]["Position"]["X"]
+    y_prim = p["Pose"]["Position"]["Y"]
     y0 = robot_p["Pose"]["Position"]["Y"]
     w = p["Pose"]["Position"]["W"]
-    return y0 + xPrim*math.sin(w) - yPrim*math.cos(w)
+    return y0 + x_prim*math.sin(w) - y_prim*math.cos(w)
 
 
 def norm_x(robot_p, p):
     """Convert a y position in RCS to WCS"""
-    xPrim = p["Pose"]["Position"]["X"]
-    yPrim = p["Pose"]["Position"]["Y"]
+    x_prim = p["Pose"]["Position"]["X"]
+    y_prim = p["Pose"]["Position"]["Y"]
     x0 = robot_p["Pose"]["Position"]["X"]
     w = p["Pose"]["Position"]["W"]
-    return x0 + xPrim*math.cos(w) - yPrim*math.sin(w)
+    return x0 + x_prim * math.cos(w) - y_prim * math.sin(w)
 
 
 def x_dist(p1, p2):
@@ -71,14 +65,3 @@ def y_dist(p1, p2):
     y2 = p2["Pose"]["Position"]["Y"]
     
     return math.fabs(p2["Pose"]["Position"]["Y"] - p1["Pose"]["Position"]["Y"])
-
-
-def degree_distance(p1, p2):
-    pos1 = p1["Pose"]["Orientation"]
-    pos2 = p2["Pose"]["Orientation"]
-    n1 = normalize([pos1["X"], pos1["Y"], pos1["Z"], pos2["W"]])
-    n2 = normalize([pos2["X"], pos2["Y"], pos2["Z"], pos2["W"]])
-    ang1 = 2 * math.acos(n1[3])
-    ang2 = 2 * math.acos(n2[3])
-
-    return ang2 - ang1

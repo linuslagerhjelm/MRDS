@@ -19,11 +19,11 @@ class Path:
         """Returns an ideal goal point based on lookahead distance
         and latest laser scan"""
         goal_point = self.data_points[0]
-        for i in range(0, len(self.data_points)):
+        for i in range(1, len(self.data_points)):
             dist = pos_dist(goal_point, self.data_points[i])
-            #if dist > lookahead:
-            goal_point = self.data_points[i]
-            self.data_points = self.data_points[1:]
-            break
+            if dist > lookahead:
+                goal_point = self.data_points[i]
+                self.data_points = self.data_points[i+1:]
+                break
 
         return goal_point
