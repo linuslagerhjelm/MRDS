@@ -43,17 +43,10 @@ class LowControl:
         self.angular = angular
         self.mrds.post_speed(angular, linear)
     
-    def steer_to_point(self, point, speed, curvature):
-        # if self.timer:
-        #    self.timer.cancel()
-        # rot = utils.degree_distance(loc, point)
-
+    def steer_to_point(self, speed, curvature):
         # omega = vY according to lecture notes
         omega = speed*curvature
-        # timeout = dist/speed
         self.set_speed(omega, speed)
-        # self.timer = Timer(timeout, self._stop_robot)
-        # self.timer.start()
 
     def get_location(self):
         return self.mrds.get_localization()
@@ -61,6 +54,11 @@ class LowControl:
     def get_laser_scan(self):
         return self.mrds.get_laser_echoes()
 
-    def _stop_robot(self):
+    def reached_point(self, gp):
+        p1 = self.mrds.get_localization()
+        dist = utils.pos_dist(p1, gp)
+        return dist < 1
+
+    def stop_robot(self):
         self.set_speed(0, 0)
         self.timer = None

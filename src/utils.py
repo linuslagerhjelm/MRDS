@@ -2,8 +2,6 @@ import json
 import math
 from Quaternion import normalize
 from src.given import heading
-from Quaternion import Quat
-
 
 def position_equals(p1, p2):
     """Compares two points to determine if the are the same"""
@@ -20,25 +18,26 @@ def pos_dist(p1, p2):
     return math.sqrt(((pos1["X"] - pos2["X"])**2) +
             ((pos1["Y"] - pos2["Y"])**2))
 
+
 def delta_x(p1,p2):
     x1= p1["Pose"]["Position"]["X"]
     x2= p2["Pose"]["Position"]["X"]
     return math.fabs(x1-x2)
 
 
-def delta_y(p1,p2):
-    y1= p1["Pose"]["Position"]["Y"]
-    y2= p2["Pose"]["Position"]["Y"]
+def delta_y(p1, p2):
+    y1 = p1["Pose"]["Position"]["Y"]
+    y2 = p2["Pose"]["Position"]["Y"]
     return math.fabs(y1-y2)
 
 
-def norm_y_dist(p1,p2):
-    dist = pos_dist(p1,p2)
-    w = heading(p1["Pose"]["Orientation"]) #p1["Pose"]["Orientation"]["W"]
-    angle = math.atan2(delta_y(p1, p2), delta_x(p1, p2))
-    new_angle = math.pi/4 - angle - math.atan2(w["Y"], w["X"])
-    print math.cos(new_angle) * 180 / math.pi
-    return math.cos(new_angle)*dist
+def norm_y_dist(loc, gp):
+    dist = pos_dist(loc, gp)
+    w = heading(loc["Pose"]["Orientation"])
+    angle_rcs_y = math.atan2(delta_y(loc, gp), delta_x(loc, gp))
+    angle_wcs_y = angle_rcs_y + math.atan2(w["Y"], w["X"])
+    # print math.cos(new_angle) * 180 / math.pi
+    return math.sin(angle_wcs_y)*dist
 
 
 def norm_y(robot_p, p):
@@ -49,6 +48,7 @@ def norm_y(robot_p, p):
     w = p["Pose"]["Position"]["W"]
     return y0 + xPrim*math.sin(w) - yPrim*math.cos(w)
 
+
 def norm_x(robot_p, p):
     """Convert a y position in RCS to WCS"""
     xPrim = p["Pose"]["Position"]["X"]
@@ -57,9 +57,9 @@ def norm_x(robot_p, p):
     w = p["Pose"]["Position"]["W"]
     return x0 + xPrim*math.cos(w) - yPrim*math.sin(w)
 
+
 def x_dist(p1, p2):
     return math.fabs(p2["Pose"]["Position"]["X"] - p1["Pose"]["Position"]["X"])
-
 
 
 def y_dist(p1, p2):
@@ -82,6 +82,3 @@ def degree_distance(p1, p2):
     ang2 = 2 * math.acos(n2[3])
 
     return ang2 - ang1
-
-    # return math.acos(
-    #        (2*(n1[0]*n2[0]+n1[1]*n2[1]+n1[2]*n2[2]+n1[3]*n2[3])**2)-1)
