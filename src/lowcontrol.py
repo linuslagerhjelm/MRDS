@@ -56,9 +56,7 @@ class LowControl:
 
     def reached_point(self, gp):
         p1 = self.mrds.get_localization()
-        dist = utils.pos_dist(p1, gp)
-        print dist
-        return dist < 1
+        return utils.pos_dist(p1, gp) < 1
 
     def stop_robot(self):
         self.set_speed(0, 0)

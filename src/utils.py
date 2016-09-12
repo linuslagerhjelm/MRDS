@@ -16,22 +16,31 @@ def pos_dist(p1, p2):
 def delta_x(p1, p2):
     x1 = p1["Pose"]["Position"]["X"]
     x2 = p2["Pose"]["Position"]["X"]
-    return math.fabs(x1-x2)
+    return x1-x2
 
 
 def delta_y(p1, p2):
     y1 = p1["Pose"]["Position"]["Y"]
     y2 = p2["Pose"]["Position"]["Y"]
-    return math.fabs(y1-y2)
+    return y1-y2
 
 
-def norm_y_dist(loc, gp):
+def rcs_y_dist(loc, gp):
     dist = pos_dist(loc, gp)
     w = heading(loc["Pose"]["Orientation"])
-    angle_rcs_y = math.atan2(delta_y(loc, gp), delta_x(loc, gp))
-    angle_wcs_y = angle_rcs_y - math.atan2(w["Y"], w["X"])
+    angle_wcs = math.atan2((delta_y(gp, loc)), (delta_x(gp, loc)))
+    angle_w = math.atan2((w["Y"]), (w["X"]))
+    if angle_wcs > math.pi:
+        angle_wcs = 2*math.pi - angle_wcs
+    if angle_wcs < math.pi:
+        angle_wcs = 2*math.pi + angle_wcs
+    if angle_w > math.pi:
+        angle_w = 2*math.pi - angle_w
+    if angle_w < math.pi:
+        angle_w = 2*math.pi + angle_w
+    angle_wcs -= angle_w
     # print math.cos(new_angle) * 180 / math.pi
-    return math.sin(angle_wcs_y)*dist
+    return math.sin(angle_wcs)*dist
 
 
 def norm_y(robot_p, p):
@@ -50,10 +59,6 @@ def norm_x(robot_p, p):
     x0 = robot_p["Pose"]["Position"]["X"]
     w = p["Pose"]["Position"]["W"]
     return x0 + x_prim * math.cos(w) - y_prim * math.sin(w)
-
-
-def x_dist(p1, p2):
-    return math.fabs(p2["Pose"]["Position"]["X"] - p1["Pose"]["Position"]["X"])
 
 
 def y_dist(p1, p2):

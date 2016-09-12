@@ -28,21 +28,20 @@ class HighControl:
                 print "New GP!"
                 gp = path.get_goal_point(self.look, self.lc.get_laser_scan())
 
-            lookahead = utils.pos_dist(loc, gp)
+            L = utils.pos_dist(loc, gp)
 
             # Construct a circle passing through (0,0)RCS and GP, such that the
             # vehicle orientation is a tangent to the circle The circle is defined
             # by its radius r and midpoint We know that r = L^2/2y from geometry
-            y = utils.norm_y_dist(loc, gp)
-            r = (lookahead**2) / (2*y)
+            y = utils.rcs_y_dist(loc, gp)
+            r = (L**2) / (2*y)
 
             # Set phi or omega to correspond to motion along this circle, omega = vY
             # where v is the linear speed and Y=1/r is the curvature of the circle
             Y = 1/r
-
             self.lc.steer_to_point(self.speed, Y)
 
             # sleep briefly to prevent socket overload
-            sleep(0.001)
+            sleep(0.003)
 
         return
