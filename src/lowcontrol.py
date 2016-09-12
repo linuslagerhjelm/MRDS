@@ -46,7 +46,6 @@ class LowControl:
     def steer_to_point(self, point, speed, curvature):
         # if self.timer:
         #    self.timer.cancel()
-        # rot = utils.degree_distance(loc, point)
 
         # omega = vY according to lecture notes
         omega = speed*curvature
