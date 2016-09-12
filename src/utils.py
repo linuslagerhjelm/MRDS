@@ -14,8 +14,8 @@ def pos_dist(p1, p2):
 
 
 def delta_x(p1, p2):
-    x1= p1["Pose"]["Position"]["X"]
-    x2= p2["Pose"]["Position"]["X"]
+    x1 = p1["Pose"]["Position"]["X"]
+    x2 = p2["Pose"]["Position"]["X"]
     return math.fabs(x1-x2)
 
 
