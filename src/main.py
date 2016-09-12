@@ -6,7 +6,7 @@ from src.lowcontrol import LowControl
 from src.highcontrol import HighControl
 
 
-# Input argument address, port, lookahead, path to path file
+# Input argument address, port, lookahead, path to path file, speed
 def main():
     if len(sys.argv) != 6:
         print "This program requires exactly 6 input parameters. Got: " + str(len(sys.argv))
