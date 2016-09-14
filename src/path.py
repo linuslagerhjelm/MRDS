@@ -1,5 +1,6 @@
 import json
 from src.utils import *
+from src.given import heading
 from exception.NoAvailablePathException import NoAvailablePathException
 
 
@@ -46,6 +47,10 @@ class Path:
         # found, use the laser scan to determine if we can see it.
         # If we can we should pick that point instead. Else, use
         # the first point
+        # for i in range(1, len(self.data_points)):
+        #     dist = pos_dist(init_point, self.data_points[i])
+        #     if dist < 2*lookahead:
+        #         break
 
         return goal_point
 
