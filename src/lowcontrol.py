@@ -1,8 +1,5 @@
 from src.laser import Laser
-from time import sleep
-from threading import Timer
 import utils
-import math
 
 
 class LowControl:
@@ -20,7 +17,6 @@ class LowControl:
         self.linear = None
         self.angular = None
         self.mrds = mrds
-        self.timer = None
         self.laser = Laser(mrds)
         self.pose = self.mrds.get_localization()
         return
@@ -44,6 +40,7 @@ class LowControl:
         self.mrds.post_speed(angular, linear)
     
     def steer_to_point(self, speed, curvature):
+        sp = self.adjust_speed(speed, curvature)
         # omega = vY according to lecture notes
         omega = speed*curvature
         self.set_speed(omega, speed)
@@ -54,10 +51,12 @@ class LowControl:
     def get_laser_scan(self):
         return self.mrds.get_laser_echoes()
 
+    def adjust_speed(self, speed, curvature):
+        return speed
+
     def reached_point(self, gp):
         p1 = self.mrds.get_localization()
         return utils.pos_dist(p1, gp) < 1
 
     def stop_robot(self):
         self.set_speed(0, 0)
-        self.timer = None

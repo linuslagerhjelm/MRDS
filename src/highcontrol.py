@@ -19,13 +19,11 @@ class HighControl:
         """
 
         gp = self.lc.get_location()
-        #len(path.data_points)
-        while True:
+        while not self._has_reached_goal(path):
             loc = self.lc.get_location()
 
             # Define a goal point (GP) on the path, at distance L from the robot (if we reached the previous one)
             if self.lc.reached_point(gp):
-                print "New GP!"
                 gp = path.get_goal_point(self.look, self.lc.get_laser_scan())
 
             L = utils.pos_dist(loc, gp)
@@ -44,4 +42,8 @@ class HighControl:
             # sleep briefly to prevent socket overload
             sleep(0.003)
 
-        return
+        self.lc.stop_robot()
+
+    def _has_reached_goal(self, path):
+        if not path.past_half(): return False
+        return self.lc.reached_point(path.get_final_point())

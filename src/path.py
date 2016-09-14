@@ -9,6 +9,8 @@ class Path:
             with open(f, 'r') as data_file:
                 self.data_points = json.loads(data_file.read())
                 self.data_points = list(self.data_points)
+                self.goal = self.data_points[-1]
+                self.initial_length = len(self.data_points)
                 data_file.close()
 
         except Exception:
@@ -27,3 +29,9 @@ class Path:
                 break
 
         return goal_point
+
+    def past_half(self):
+        return len(self.data_points) <= (self.initial_length/2)
+
+    def get_final_point(self):
+        return self.goal

@@ -9,7 +9,7 @@ from src.highcontrol import HighControl
 # Input argument address, port, lookahead, path to path file, speed
 def main():
     if len(sys.argv) != 6:
-        print "This program requires exactly 6 input parameters. Got: " + str(len(sys.argv))
+        print "This program requires exactly 5 input parameters. Got: " + str(len(sys.argv) - 1)
         sys.exit(0)
 
     address = sys.argv[1]
