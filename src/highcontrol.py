@@ -1,5 +1,4 @@
 from time import sleep
-from threading import Timer
 import utils
 
 
@@ -7,6 +6,9 @@ class HighControl:
     """ Highcontrol represents a planner for the tracker robot over on MRDS
 
         Attributes:
+            lc: a Lowcontrol object used to send commands to the robot
+            look: the user specified value for the lookahead
+            speed: the user specified value for the linear speed
     """
     def __init__(self, lowcontrol, lookahead, speed):
         self.lc = lowcontrol
@@ -45,5 +47,6 @@ class HighControl:
         self.lc.stop_robot()
 
     def _has_reached_goal(self, path):
+        """Determines weather the robot has reached the goal on the path"""
         if not path.past_half(): return False
         return self.lc.reached_point(path.get_final_point())

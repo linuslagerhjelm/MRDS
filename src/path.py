@@ -4,6 +4,11 @@ from exception.NoAvailablePathException import NoAvailablePathException
 
 
 class Path:
+    """ Path represents a path that consists of a series of Pose objects
+
+            Attributes:
+
+        """
     def __init__(self, f):
         try:
             with open(f, 'r') as data_file:
@@ -18,8 +23,10 @@ class Path:
             raise NoAvailablePathException("Failed to read path file on path: " + f)
 
     def get_goal_point(self, lookahead, laser):
-        """Returns an ideal goal point based on lookahead distance
-        and latest laser scan"""
+        """
+            Returns an ideal goal point based on lookahead distance
+            and latest laser scan
+        """
         goal_point = self.data_points[0]
         for i in range(1, len(self.data_points)):
             dist = pos_dist(goal_point, self.data_points[i])
@@ -31,7 +38,9 @@ class Path:
         return goal_point
 
     def past_half(self):
+        """ Determines weather the robot has completed more than half the path """
         return len(self.data_points) <= (self.initial_length/2)
 
     def get_final_point(self):
+        """ Retiurns the final point on the path """
         return self.goal

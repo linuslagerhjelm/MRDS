@@ -1,11 +1,12 @@
-import json
 import math
 from src.given import heading
 
 
 def pos_dist(p1, p2):
-    """Returns the euclidean distance between two points as a floating point 
-        value"""
+    """
+        Returns the euclidean distance between two points as a floating point
+        value
+    """
     pos1 = p1["Pose"]["Position"]
     pos2 = p2["Pose"]["Position"]
     
@@ -14,18 +15,21 @@ def pos_dist(p1, p2):
 
 
 def delta_x(p1, p2):
+    """ Returns x distance between two points """
     x1 = p1["Pose"]["Position"]["X"]
     x2 = p2["Pose"]["Position"]["X"]
     return x1-x2
 
 
 def delta_y(p1, p2):
+    """ Returns y distance between two points """
     y1 = p1["Pose"]["Position"]["Y"]
     y2 = p2["Pose"]["Position"]["Y"]
     return y1-y2
 
 
 def rcs_y_dist(loc, gp):
+    """ Returns the RCS y distance between two points in the WCS system """
     dist = pos_dist(loc, gp)
     w = heading(loc["Pose"]["Orientation"])
     angle_wcs = math.atan2((delta_y(gp, loc)), (delta_x(gp, loc)))
@@ -44,7 +48,7 @@ def rcs_y_dist(loc, gp):
 
 
 def norm_y(robot_p, p):
-    """Convert a x position in RCS to WCS"""
+    """ Convert a x position in RCS to WCS """
     x_prim = p["Pose"]["Position"]["X"]
     y_prim = p["Pose"]["Position"]["Y"]
     y0 = robot_p["Pose"]["Position"]["Y"]
@@ -53,7 +57,7 @@ def norm_y(robot_p, p):
 
 
 def norm_x(robot_p, p):
-    """Convert a y position in RCS to WCS"""
+    """ Convert a y position in RCS to WCS """
     x_prim = p["Pose"]["Position"]["X"]
     y_prim = p["Pose"]["Position"]["Y"]
     x0 = robot_p["Pose"]["Position"]["X"]
