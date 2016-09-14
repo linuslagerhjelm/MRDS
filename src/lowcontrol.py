@@ -1,5 +1,6 @@
 from src.laser import Laser
 import utils
+import math
 
 
 class LowControl:
@@ -40,7 +41,6 @@ class LowControl:
         self.mrds.post_speed(angular, linear)
     
     def steer_to_point(self, speed, curvature):
-        sp = self.adjust_speed(speed, curvature)
         # omega = vY according to lecture notes
         omega = speed*curvature
         self.set_speed(omega, speed)
@@ -50,9 +50,6 @@ class LowControl:
 
     def get_laser_scan(self):
         return self.mrds.get_laser_echoes()
-
-    def adjust_speed(self, speed, curvature):
-        return speed
 
     def reached_point(self, gp):
         p1 = self.mrds.get_localization()
