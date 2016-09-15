@@ -29,7 +29,6 @@ class HighControl:
             if self.lc.reached_point(gp):
                 gp = path.get_goal_point(self.look, self.lc.get_laser_scan())
 
-
             self.lc.steer_to_point(loc, gp, self.speed)
 
             # sleep briefly to prevent socket overload
