@@ -48,6 +48,8 @@ class LowControl:
         """
         # omega = vY according to lecture notes
         omega = speed*curvature
+        if self.laser.will_crash():
+            omega *= 2
         self.set_speed(omega, speed)
 
     def get_location(self):
