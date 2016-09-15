@@ -49,7 +49,7 @@ class Path:
         # the first point
         # for i in range(1, len(self.data_points)):
         #     dist = pos_dist(init_point, self.data_points[i])
-        #     if dist < 2*lookahead:
+        #     if dist < lookahead:
         #         break
 
         return goal_point

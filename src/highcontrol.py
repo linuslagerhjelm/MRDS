@@ -27,6 +27,7 @@ class HighControl:
             # Define a goal point (GP) on the path, at distance L from the robot (if we reached the previous one)
             if self.lc.reached_point(gp):
                 gp = path.get_goal_point(self.look, self.lc.get_laser_scan())
+                print utils.angle_dist(loc, gp)
 
             L = utils.pos_dist(loc, gp)
 

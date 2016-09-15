@@ -74,3 +74,13 @@ def y_dist(p1, p2):
     y2 = p2["Pose"]["Position"]["Y"]
     
     return math.fabs(p2["Pose"]["Position"]["Y"] - p1["Pose"]["Position"]["Y"])
+
+
+def angle_dist(loc, gp):
+    # Input: w1: path, w2: path
+
+    """ Returns the RCS y distance between two points in the WCS system """
+    w = heading(loc["Pose"]["Orientation"])
+    angle_wcs = math.atan2((delta_y(gp, loc)), (delta_x(gp, loc)))
+    angle_w = math.atan2((w["Y"]), (w["X"]))
+    return angle_w - angle_wcs
