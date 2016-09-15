@@ -41,16 +41,51 @@ class LowControl:
         self.angular = angular
         self.mrds.post_speed(angular, linear)
     
-    def steer_to_point(self, speed, curvature):
+    def steer_to_point(self, loc, gp, speed):
         """
             Receives speed and curvature and tells the robot to start
             the drive to a point
         """
+        L = utils.pos_dist(loc, gp)
+
+        # Construct a circle passing through (0,0)RCS and GP, such that the
+        # vehicle orientation is a tangent to the circle The circle is defined
+        # by its radius r and midpoint We know that r = L^2/2y from geometry
+        y = utils.rcs_y_dist(loc, gp)
+        r = (L ** 2) / (2 * y)
+
+        # Set phi or omega to correspond to motion along this circle, omega = vY
+        # where v is the linear speed and Y=1/r is the curvature of the circle
+        Y = 1 / r
+        s = speed
+
+        # sleep briefly to prevent socket overload
         # omega = vY according to lecture notes
-        omega = speed*curvature
-        if self.laser.will_crash():
-            omega *= 2
-        self.set_speed(omega, speed)
+        omega = s*Y
+
+        crash = self.laser.will_crash()
+        # Is about to crash on the right
+        if crash == -1:
+            if omega < 0:
+                # It's driving to the left, speed up
+                s = 0
+            else:
+                # It's driving to the right, slow down
+                s = 0
+        if crash == 1:
+            #Is about to crash to the left
+            if omega < 0:
+                # It's driving to the left, slow down
+                s = 0
+
+            else:
+                # It's driving to the right, speed up
+                s = 0
+        if utils.angle_dist(loc, gp) > math.pi:
+            print utils.angle_dist(loc, gp)
+            s = .2
+            omega *= 100
+        self.set_speed(omega, s)
 
     def get_location(self):
         """Returns a pose object for the robots current position"""
@@ -66,7 +101,7 @@ class LowControl:
             robot has reached the specified point
         """
         p1 = self.mrds.get_localization()
-        return utils.pos_dist(p1, gp) < 1
+        return utils.pos_dist(p1, gp) < .4
 
     def stop_robot(self):
         """Stops the robot"""

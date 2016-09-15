@@ -37,11 +37,11 @@ def rcs_y_dist(loc, gp):
     if angle_wcs > math.pi:
         angle_wcs = 2*math.pi - angle_wcs
     if angle_wcs < math.pi:
-        angle_wcs = 2*math.pi + angle_wcs
+        angle_wcs += 2 * math.pi
     if angle_w > math.pi:
         angle_w = 2*math.pi - angle_w
     if angle_w < math.pi:
-        angle_w = 2*math.pi + angle_w
+        angle_w += 2 * math.pi
     angle_wcs -= angle_w
     # print math.cos(new_angle) * 180 / math.pi
     return math.sin(angle_wcs)*dist
