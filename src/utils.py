@@ -1,5 +1,5 @@
 import math
-from src.given import heading
+from given import heading
 
 
 def pos_dist(p1, p2):

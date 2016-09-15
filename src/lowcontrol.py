@@ -1,4 +1,4 @@
-from src.laser import Laser
+from laser import Laser
 import utils
 import math
 
@@ -65,24 +65,9 @@ class LowControl:
 
         crash = self.laser.will_crash()
         # Is about to crash on the right
-        if crash == -1:
-            if omega < 0:
-                # It's driving to the left, speed up
-                s = 0
-            else:
-                # It's driving to the right, slow down
-                s = 0
-        if crash == 1:
-            #Is about to crash to the left
-            if omega < 0:
-                # It's driving to the left, slow down
-                s = 0
-
-            else:
-                # It's driving to the right, speed up
-                s = 0
+        if crash == -1 or crash == 1:
+            s = 0
         if utils.angle_dist(loc, gp) > math.pi:
-            print utils.angle_dist(loc, gp)
             s = .2
             omega *= 100
         self.set_speed(omega, s)
