@@ -60,10 +60,10 @@ A path is defined as a list of positions in the order that they're supposed to
 be followed (I.e. the robots starting position to the end goal that is to be
 reached).
 
-To control the robot we implement a \textit{high level controller}, 
-\textit{low level controller} and a \textit{laser}. The reason for the division is to have one class
-where we take car of all the high level interaction with the world and one low
-level interaction in the world. 
+To control the robot we implement a \textit{high level controller}, \textit{low
+level controller} and a \textit{laser}. The reason for the division is to have
+one class where we take car of all the high level interaction with the world and
+one with all the low level interaction with the world. 
 
 The high level controller has the task of calculating the point in the path that
 we want to travel to, defined as the GP. 
@@ -110,7 +110,7 @@ through both points where the mobile robot's orientation is tangent to the
 circle. The circle is defined by it's midpoint and radius $r$. The way it's done is
 as follows:
 
-Define $\vec{L} = (LOC, GP) \implies r = \frac{L_{y}^2}{2y}$. The curvature we
+Define $\vec{L} = (LOC, GP) \implies r = \frac{L^2}{2L_{y}}$. The curvature we
 define as $\gamma = \frac{1}{r}$ and the angular speed that the robot will
 take to reach GP will then be $\omega = v\gamma$. The linear speed will 
 be $v$ which is defined by the program's input arguments. The intuition behind
