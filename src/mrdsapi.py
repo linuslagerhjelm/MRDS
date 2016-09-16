@@ -1,7 +1,5 @@
 import httplib
 import json
-from exception import FailedToGetException
-from exception import FailedToPostException
 
 HEADERS = {"Content-type": "application/json", "Accept": "text/json"}
 
@@ -26,7 +24,7 @@ class Mrdsapi:
         response = connection.getresponse()
 
         if response.status != 200:
-            raise FailedToGetException.FailedToGetException(response.reason)
+            raise Exception(response.reason)
 
         data = response.read()
         response.close()
@@ -41,7 +39,7 @@ class Mrdsapi:
         response = connection.getresponse()
 
         if response.status != 204:
-            raise FailedToPostException.FailedToPostException(response.reason)
+            raise Exception(response.reason)
 
         return response.status
 

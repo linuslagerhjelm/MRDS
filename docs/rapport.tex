@@ -56,33 +56,32 @@ defined as: $(x, y, z, \phi, \theta, \omega)$ where $(x,y,z)$ is the robots
 position and $(\phi, \theta, \omega)$ is the robots roll, pith, yaw respectively
 and denoted as Euler angles and are implemented as quaternions.
 
-A path is defined as a list of positions in the order that they're supposed to
-be followed (I.e. the robots starting position to the end goal that is to be
-reached).
+A path is defined as an ordered list of positions (I.e. from the robots starting
+position to the end goal that is to be reached).
 
-To control the robot we implement a \textit{high level controller}, \textit{low
-level controller} and a \textit{laser}. The reason for the division is to have
-one class where we take car of all the high level interaction with the world and
-one with all the low level interaction with the world. 
+To control the robot we implement a \textit{high level controller}, 
+\textit{low level controller} and a \textit{laser}. The reason for the separation is to have one class
+where we take care of all the high level interaction with the world, i.e. path planing and one low
+level controller that maps the plan to robot instructions.
 
 The high level controller has the task of calculating the point in the path that
 we want to travel to, defined as the GP. 
 
 The low level controller calculates the math and logistics of moving the mobile
-remote robot from it's current position to a given point. It also makes sure
-that the mobile robot will collide with any obstacles on the way. It finds the
+remote robot from its current position to a given point. It also makes sure
+that the mobile robot will not collide with any obstacles on the way. It finds the
 path to take from the robots current position to a given point by regulating the
 robots angular speed (defined as $\omega$) and linear speed (defined as $v$).
-The way it cal is calculated is described in the implementation of the Pure
-pursuit algorithm, described below.
+The way it is calculated is described in the implementation of the Pure
+Pursuit algorithm, described below.
 
-The low level controller also works with the laser to check if there's any
-obstacles to take care of. If it finds that there's an object in the way the
+The low level controller also works with the laser to check if there are any
+obstacles to avoid. If it finds that there is an object in the way the
 robot will slow down and continue turning so that it does not collide with the
 object when driving forward. Lastly when the point is reached the low level
 controller will make sure that the mobile robot slows down.  
 
-The laser is a part of the mobile remote robot that checks in a 271 degree angle
+The laser is a part of the mobile remote robot that checks, in a 270 degrees angle,
 the distance to the nearest obstacle. In the implementation it will also check
 if the robot is within a $0.4$ distance from any obstacle so that the low level
 controller can deal with it.
@@ -97,13 +96,13 @@ idea of Pure pursuit is that we define two points, LOC and GP. LOC is the
 current position of the robot in the WCS. GP is a calculated position in path
 that we want to reach, also in the WCS. 
 
-The way to calculate GP is by selecting a point within the path list that is
+The way to calculate GP is by selecting a point within the path that is
 just outside of a given look-a-head distance. The look-a-head distance is a
-given parameter that can be modified in the program. If you select a look-a-head
-distance that is too high the robot might have difficulty following the path and
-crashing into a wall. If you select too low of a look-a-head distance the robot
-might become too slow. It thus needs to be tweaked by trial-and-error, in our
-program we recommend setting the look-a-head distance to $0.5$.
+given parameter that can be modified in the program. A look-a-head
+distance that is too high will result in difficulties for the robot to stay on the path.
+If the look-a-head distance is too low, the robot will become too slow. It thus needs
+to be tweaked by trial-and-error, in our program we recommend setting the look-a-head
+distance to $0.5$.
 
 Once GP and WCS has been set the algorithm constructs a circle that passes
 through both points where the mobile robot's orientation is tangent to the

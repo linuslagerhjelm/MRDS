@@ -1,23 +1,26 @@
 import sys, os, time
-from src.mrdsapi import Mrdsapi
-from src.path import Path
-from src.lowcontrol import LowControl
-from src.highcontrol import HighControl
-
+from mrdsapi import Mrdsapi
+from path import Path
+from lowcontrol import LowControl
+from highcontrol import HighControl
 
 # Input argument address, port, lookahead, path to path file, speed
 def main():
     # validate input args
-    if len(sys.argv) != 6:
-        print "This program requires exactly 5 input parameters. Got: " + str(len(sys.argv) - 1)
+    if len(sys.argv) < 3:
+        print "This program requires at least 2 input parameters. Got: " + str(len(sys.argv) - 1)
         sys.exit(0)
 
     # initialize everything
-    address = sys.argv[1]
-    port = sys.argv[2]
-    lookahead = float(sys.argv[3])
-    path = Path(os.path.abspath(sys.argv[4]))
-    speed = float(sys.argv[5])
+    address = "localhost"
+    port = 50000
+    if len(sys.argv) == 5:
+        address = sys.argv[3]
+        port = sys.argv[4]
+
+    lookahead = float(sys.argv[2])
+    path = Path(os.path.abspath(sys.argv[1]))
+    speed = 1
     lc = LowControl(Mrdsapi(address, port))
     hc = HighControl(lc, lookahead, speed)
 

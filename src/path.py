@@ -1,7 +1,6 @@
 import json
-from src.utils import *
-from src.given import heading
-from exception.NoAvailablePathException import NoAvailablePathException
+from utils import *
+from given import heading
 
 
 class Path:
@@ -20,7 +19,7 @@ class Path:
                 data_file.close()
         except Exception:
             # Rethrow with custom exception for clarity
-            raise NoAvailablePathException("Failed to read path file on path: " + f)
+            raise Exception("Failed to read path file on path: " + f)
 
         self.goal = self.data_points[-1]
         self.initial_length = len(self.data_points)
