@@ -16,6 +16,7 @@
 \usepackage{times}
 \usepackage{hyperref}
 \usepackage{titlesec}
+\usepackage{verbatim}
 \titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 \titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 \titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
@@ -45,6 +46,31 @@ Follow the path}
 \newpage
 \section{Introduction}
 
+\subsectiuon{Running the program}
+
+The implementation is writtern in python 2.7 which means that a python 2.7 shell
+is required to run the implementation. Further more, the program expects a MRDS
+webserver to be running somewhere. By defaut, the program assumes that the
+webserver will be running on \textit{localhost:50000} but this can be changed
+changed by providing a new IP and port as arguments to the program when the
+program starts. Mandadtory program arguments are a search path to a
+\textit{Path-file} and a value for the lookahead distance. What value to choose
+as a lookahead distance is discussed later in this report.
+
+Should the user fail to provide the mandadtory arguments, the program will
+immediately terminate with a massage explaining that not enough input
+arguments were provided.
+
+Impropper search path to the path-file will result in an IO error message
+beeing printed and if a connection to the remote MRDS server could not
+be established, a network error message will be printed. When the robot
+has successfully reached the goal of the path, the timing of the run is
+outputted to the terminal.
+
+Example usage of the program might look like:
+\begin{verbatim}
+python main.py /path/to/path/file.json .5
+\end{verbatim}
 
 \section{Problem description}
 
@@ -96,11 +122,11 @@ idea of Pure pursuit is that we define two points, LOC and GP. LOC is the
 current position of the robot in the WCS. GP is a calculated position in path
 that we want to reach, also in the WCS. 
 
-The way to calculate GP is by selecting a point within the path that is
+The way to calculate GP is by selecting a point on the path that is located
 just outside of a given look-a-head distance. The look-a-head distance is a
-given parameter that can be modified in the program. A look-a-head
+parameter that can be modified as a program argument. A look-a-head
 distance that is too high will result in difficulties for the robot to stay on the path.
-If the look-a-head distance is too low, the robot will become too slow. It thus needs
+If the look-a-head distance is too low, the robot will complete the path slowly. It thus needs
 to be tweaked by trial-and-error, in our program we recommend setting the look-a-head
 distance to $0.5$.
 
@@ -116,7 +142,27 @@ be $v$ which is defined by the program's input arguments. The intuition behind
 this is demonstrated in figure~\ref{purepursuit}.
 
 
+\section{Concluding discussion}
 
+Our work with this assignment, over all, ran quite smoothly with just
+some minor setbacks. We initially encountered some problems getting
+the environment up and running. At first, we wanted to install a
+virtual windows desktop on our Mac machines which at first seemd to
+be working fine. However when we tried to use this setup on the University
+WLAN the host machine were unable to connect to the guest machine. A problem
+that we in the end did not solve but we ended up writing all of our code on
+the school computers.
+
+All the other problems we encountered during the development turned out
+to stem from the fact that there were a couple of subtle offsets between
+the formulas and the implementation, such as mixing up the robots
+\textit{Pose} and the goal point. Something that resulted in strange
+behaviour on the robot that were difficult to track down as the code
+seemed to be complying to the formulas from the lecture notes.
+
+Aside from these setbacks, there were not really anything worth mentioning
+about the progress. Due to the fact that we had been working with both python
+and JSON api:s before, there were no other difficulties.
 
 
 \bibliographystyle{abbrv}
