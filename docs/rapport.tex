@@ -7,7 +7,6 @@
 \usepackage{pgf}
 \usepackage{amsmath}
 \usepackage{listings}
-\usepackage[swedish]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{float}
@@ -46,23 +45,23 @@ Follow the path}
 \newpage
 \section{Introduction}
 
-\subsectiuon{Running the program}
+\subsection{Running the program}
 
-The implementation is writtern in python 2.7 which means that a python 2.7 shell
-is required to run the implementation. Further more, the program expects a MRDS
-webserver to be running somewhere. By defaut, the program assumes that the
-webserver will be running on \textit{localhost:50000} but this can be changed
+The implementation is written in python 2.7 which means that a python 2.7 shell
+is required to run the implementation. Furthermore, the program expects a MRDS
+webb server to be running somewhere. By default, the program assumes that the
+webb server will be running on \texttt{localhost:50000} but this can be changed
 changed by providing a new IP and port as arguments to the program when the
-program starts. Mandadtory program arguments are a search path to a
-\textit{Path-file} and a value for the lookahead distance. What value to choose
+program starts. Required program arguments are a search path to a
+\texttt{Path-file} and a value for the lookahead distance. What value to choose
 as a lookahead distance is discussed later in this report.
 
-Should the user fail to provide the mandadtory arguments, the program will
+Should the user fail to provide the required arguments, the program will
 immediately terminate with a massage explaining that not enough input
 arguments were provided.
 
-Impropper search path to the path-file will result in an IO error message
-beeing printed and if a connection to the remote MRDS server could not
+Improper search path to the path-file will result in an IO error message
+being printed and if a connection to the remote MRDS server could not
 be established, a network error message will be printed. When the robot
 has successfully reached the goal of the path, the timing of the run is
 outputted to the terminal.
@@ -139,19 +138,25 @@ Define $\vec{L} = (LOC, GP) \implies r = \frac{L^2}{2L_{y}}$. The curvature we
 define as $\gamma = \frac{1}{r}$ and the angular speed that the robot will
 take to reach GP will then be $\omega = v\gamma$. The linear speed will 
 be $v$ which is defined by the program's input arguments. The intuition behind
-this is demonstrated in figure~\ref{purepursuit}.
+this is demonstrated in figure~\ref{fig:purepursuit}.
+
+\begin{figure}[!htb]
+    \centering
+		\includegraphics[scale=0.3]{circle.pdf}
+    \caption{A circle created for usage in pure pursuit}
+    \label{fig:purepursuit}
+\end{figure}
 
 
 \section{Concluding discussion}
 
-Our work with this assignment, over all, ran quite smoothly with just
-some minor setbacks. We initially encountered some problems getting
-the environment up and running. At first, we wanted to install a
-virtual windows desktop on our Mac machines which at first seemd to
-be working fine. However when we tried to use this setup on the University
-WLAN the host machine were unable to connect to the guest machine. A problem
-that we in the end did not solve but we ended up writing all of our code on
-the school computers.
+Our work with this assignment, over all, ran quite smoothly with just some minor
+setbacks. We initially encountered some problems getting the environment up and
+running. First, we installed a virtual windows desktop on our Mac machines which
+at first seemed to be working fine. However when we tried to use this setup on
+the university WLAN the host machine were unable to connect to the guest
+machine. A problem that we in the end did not solve but we ended up writing all
+of our code on the school computers.
 
 All the other problems we encountered during the development turned out
 to stem from the fact that there were a couple of subtle offsets between
