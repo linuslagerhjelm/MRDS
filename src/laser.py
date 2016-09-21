@@ -13,11 +13,8 @@ class Laser:
         laser_scan = self.get_scan()
         ang = len(laser_scan)
         # -8, -1 is to the right of the robot
-        for i in range(-10, -1):
+        for i in range(-10, 10):
             if laser_scan[int(round(ang/2) + i)] < .6:
-                return -1
+                return True
         # 0, 8 is to the left of the robot
-        for i in range(0, 10):
-            if laser_scan[int(round(ang/2) + i)] < .6:
-                return 1
-        return 0
+        return False

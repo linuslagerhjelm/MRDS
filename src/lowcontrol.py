@@ -64,8 +64,8 @@ class LowControl:
         omega = s*Y
 
         crash = self.laser.will_crash()
-        # Is about to crash on the right
-        if crash == -1 or crash == 1:
+        # Is about to crash 
+        if crash:
             s = 0
         if utils.angle_dist(loc, gp) > math.pi:
             s = .2
